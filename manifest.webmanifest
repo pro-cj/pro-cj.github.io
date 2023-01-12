@@ -1,0 +1,15 @@
+{
+  "background_color": "red",
+  "description": "TEST",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "assets/logo.jpg",
+      "sizes": "192x192",
+      "type": "image/*"
+    }
+  ],
+  "name": "Awesome PWA",
+  "short_name": "PWA",
+  "start_url": "./index.html"
+}

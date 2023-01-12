@@ -1,0 +1,18 @@
+body{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    overflow: hidden;
+}
+h1{
+    font-family: "INTRO";
+    font-size: 20vmax;
+    font-weight: bold;
+    background: linear-gradient(to left,#e66465, #9198e5);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
