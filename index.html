@@ -8,14 +8,14 @@
     <link rel="apple-touch-icon" href="assets/logo_ios.png">
     <link rel="manifest" href="manifest.webmanifest">
     <meta name="theme-color" content="#317EFB"/>
-    <script defer src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-    <script defer src="main.js"></script>
+    <script src="main.js"></script>
     <title>PWA TEST</title>
 </head>
 <body>
     <h1 id="pwaTitle">PWA</h1>
     <div id="reader"></div>
 </body>
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 <script>
     function onScanSuccess(decodedText, decodedResult) {
   // handle the scanned code as you like, for example:
