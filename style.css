@@ -14,3 +14,7 @@ h1{
     -webkit-background-clip: text;
     color: transparent;
 }
+#reader{
+    width: 500px;
+    height: 500px;
+}
