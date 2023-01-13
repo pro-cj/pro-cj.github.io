@@ -51,25 +51,28 @@
     qrbox: { width: 200, height: 200 }  // Optional, if you want bounded box UI
   }
 
+  let cameras;
   let cameraId;
   let qrCodeReader;
 
 
-  const startScanning = () => {
+  const startScanning = (cameraId) => {
     const onScanSuccess = (decodedText, decodedResult) => {
       console.log(decodedText, decodedResult);
       qrString.innerHTML = `<p>${decodedText}</p>`
     }
-    qrCodeReader.start(cameraId, cofig, onScanSuccess)
+    qrCodeReader.start(cameraId, cofig, onScanSuccess ,()=>{})
   }
 
   cameraSelect.onchange = (event) => {
     cameraId = event.target.value;
-    startScanning();
+    startScanning(event.target.value);
   }
 
   Html5Qrcode.getCameras().then(devices => {
     if (devices && devices.length) {
+      cameras = devices;
+      console.log(devices);
       devices.map(device => {
         cameraSelect.innerHTML = cameraSelect.innerHTML + `<option value="${device.id}">${device.id}</option>`
       })
