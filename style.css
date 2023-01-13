@@ -4,18 +4,28 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap : 20px;
     background-color: white;
 }
 h1{
     font-family: "INTRO";
-    font-size: 20vmax;
+    font-size: 15vmax;
     font-weight: bold;
-    background: linear-gradient(to left,#e66465, #9198e5);
+    background: linear-gradient(to left,#d17272, #9198e5);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
 }
+#qrRead{
+        font-family: "INTRO";
+    font-size: 5vmax;
+}
 #reader{
     width: 500px;
     height: 500px;
+}
+
+@font-face {
+    font-family: "INTRO";
+    src: url("./assets/Intro.ttf") format("truetype");
 }
