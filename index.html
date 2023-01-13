@@ -1,41 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css" >
-    <link rel="apple-touch-icon" href="assets/logo_ios.png" sizes="180x180">
-    <link rel="manifest" href="manifest.webmanifest">
-    <meta name="theme-color" content="#317EFB"/>
-    <script src="main.js"></script>
-    <title>PWA TEST</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="apple-touch-icon" href="assets/logo_ios.png" sizes="180x180">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#317EFB" />
+  <script src="main.js"></script>
+  <title>PWA TEST</title>
 </head>
+
 <body>
-    <h1 id="pwaTitle">PWA</h1>
-    <div id="qrRead"></h1>
-    <div id="reader"></div>
+  <h1 id="pwaTitle">PWA</h1>
+  <div id="qrRead"></div>
+
+  <div id="reader"></div>
 </body>
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+<!-- <script>
+  // const qrString = document.getElementById("qrRead");
+  // function onScanSuccess(decodedText, decodedResult) {
+  //   // handle the scanned code as you like, for example:
+  //   qrString.innerText = decodedText;
+  // }
+
+  // function onScanFailure(error) {
+  //   // handle scan failure, usually better to ignore and keep scanning.
+  //   // for example:
+  //   qrString.innerText = error.message;
+  // }
+
+  // let html5QrcodeScanner = new Html5QrcodeScanner(
+  //   "reader",
+  //   { fps: 10, qrbox: { width: 250, height: 250 } },
+  // /* verbose= */ false);
+  // html5QrcodeScanner.start
+  // html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+</script> -->
 <script>
   const qrString = document.getElementById("qrRead");
-    function onScanSuccess(decodedText, decodedResult) {
-  // handle the scanned code as you like, for example:
-  qrString.innerText = decodedText;
-}
 
-function onScanFailure(error) {
-  // handle scan failure, usually better to ignore and keep scanning.
-  // for example:
-  qrString.innerText = error.message;
-}
+  let qrCodeReader;
 
-let html5QrcodeScanner = new Html5QrcodeScanner(
-  "reader",
-  { fps: 10, qrbox: {width: 250, height: 250} },
-  /* verbose= */ false);
-  html5QrcodeScanner.start
-html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+  Html5Qrcode.getCameras().then(devices => {
+    if (devices && devices.length) {
+      var cameraId = devices[0].id;
+      qrCodeReader = new Html5Qrcode("reader", true);
+      const cofig = {
+        fps: 10,    // Optional, frame per seconds for qr code scanning
+        qrbox: { width: 200, height: 200 }  // Optional, if you want bounded box UI
+      }
+      const onScanSuccess = (decodedText, decodedResult) => {
+        qrString.innerHTML = `<p>${decodedText}</p>`
+      }
+      const onScanFailed = (errorMessage) => {
+        // parse error, ignore it.
+      }
+
+      qrCodeReader.start(cameraId, cofig, onScanSuccess)
+    }
+  }
+  ).catch(err => { html5QrCode.stop(); console.error(err) });
+
 </script>
 
 </html>
