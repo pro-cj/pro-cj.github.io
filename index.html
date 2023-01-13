@@ -79,7 +79,7 @@
       })
       cameraId = devices[0].id;
       qrCodeReader = new Html5Qrcode("reader", true);
-      startScanning();
+      startScanning(cameraId);
     }
   }
   ).catch(err => { });
