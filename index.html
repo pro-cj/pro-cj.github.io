@@ -56,17 +56,18 @@
   let qrCodeReader;
 
 
-  const startScanning = (cameraId) => {
+  const startScanning = async(cameraId) => {
     const onScanSuccess = (decodedText, decodedResult) => {
       console.log(decodedText, decodedResult);
       qrString.innerHTML = `<p>${decodedText}</p>`
     }
-    qrCodeReader.start(cameraId, cofig, onScanSuccess ,()=>{})
+    await qrCodeReader.start(cameraId, cofig, onScanSuccess ,()=>{})
   }
 
-  cameraSelect.onchange = (event) => {
+  cameraSelect.onchange = async(event) => {
     cameraId = event.target.value;
-    startScanning(event.target.value);
+    await qrCodeReader.stop()
+    await startScanning(event.target.value);
   }
 
   Html5Qrcode.getCameras().then(devices => {
@@ -74,7 +75,7 @@
       cameras = devices;
       console.log(devices);
       devices.map(device => {
-        cameraSelect.innerHTML = cameraSelect.innerHTML + `<option value="${device.id}">${device.id}</option>`
+        cameraSelect.innerHTML = cameraSelect.innerHTML + `<option value="${device.id}">${device.label}</option>`
       })
       cameraId = devices[0].id;
       qrCodeReader = new Html5Qrcode("reader", true);
