@@ -54,7 +54,12 @@
   let cameraId;
   let qrCodeReader;
 
+
   const startScanning = () => {
+    const onScanSuccess = (decodedText, decodedResult) => {
+      console.log(decodedText, decodedResult);
+      qrString.innerHTML = `<p>${decodedText}</p>`
+    }
     qrCodeReader.start(cameraId, cofig, onScanSuccess)
   }
 
@@ -70,14 +75,6 @@
       })
       cameraId = devices[0].id;
       qrCodeReader = new Html5Qrcode("reader", true);
-
-      const onScanSuccess = (decodedText, decodedResult) => {
-        console.log(decodedText, decodedResult);
-        qrString.innerHTML = `<p>${decodedText}</p>`
-      }
-      const onScanFailed = (errorMessage) => {
-        // parse error, ignore it.
-      }
       startScanning();
     }
   }
