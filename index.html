@@ -19,6 +19,7 @@
 
   <div id="reader"></div>
 </body>
+
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 <!-- <script>
   // const qrString = document.getElementById("qrRead");
@@ -54,6 +55,7 @@
         qrbox: { width: 200, height: 200 }  // Optional, if you want bounded box UI
       }
       const onScanSuccess = (decodedText, decodedResult) => {
+        console.log(decodedText, decodedResult);
         qrString.innerHTML = `<p>${decodedText}</p>`
       }
       const onScanFailed = (errorMessage) => {
@@ -63,7 +65,7 @@
       qrCodeReader.start(cameraId, cofig, onScanSuccess)
     }
   }
-  ).catch(err => { html5QrCode.stop(); console.error(err) });
+  ).catch(err =>{});
 
 </script>
 
