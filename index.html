@@ -15,14 +15,15 @@
 
 <body>
   <h1 id="pwaTitle">PWA</h1>
-  <div id="qrRead"></div>
-
+  <div id="qrString"></div>
+  
   <div id="reader"></div>
+  <select id="cameras" ></select>
 </body>
 
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 <!-- <script>
-  // const qrString = document.getElementById("qrRead");
+  // const qrString = document.getElementById("qrString");
   // function onScanSuccess(decodedText, decodedResult) {
   //   // handle the scanned code as you like, for example:
   //   qrString.innerText = decodedText;
@@ -42,13 +43,21 @@
   // html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 </script> -->
 <script>
-  const qrString = document.getElementById("qrRead");
-
+  const qrString = document.getElementById("qrString");
+  const cameraSelect = document.getElementById("cameras")
+  let cameraId;
   let qrCodeReader;
+
+  cameraSelect.onchange = (event) =>{
+    cameraId = event.target.value;
+  }
 
   Html5Qrcode.getCameras().then(devices => {
     if (devices && devices.length) {
-      var cameraId = devices[0].id;
+      devices.map(device=>{
+        cameraSelect.innerHTML = cameraSelect.innerHTML + `<option value="${device.id}">${device.id}</option>`
+      })
+      cameraId = devices[0].id;
       qrCodeReader = new Html5Qrcode("reader", true);
       const cofig = {
         fps: 10,    // Optional, frame per seconds for qr code scanning
