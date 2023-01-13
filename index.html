@@ -16,9 +16,9 @@
 <body>
   <h1 id="pwaTitle">PWA</h1>
   <div id="qrString"></div>
-  
+
   <div id="reader"></div>
-  <select id="cameras" ></select>
+  <select id="cameras"></select>
 </body>
 
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
@@ -45,24 +45,32 @@
 <script>
   const qrString = document.getElementById("qrString");
   const cameraSelect = document.getElementById("cameras")
+
+  const cofig = {
+    fps: 10,    // Optional, frame per seconds for qr code scanning
+    qrbox: { width: 200, height: 200 }  // Optional, if you want bounded box UI
+  }
+
   let cameraId;
   let qrCodeReader;
 
-  cameraSelect.onchange = (event) =>{
+  const startScanning = () => {
+    qrCodeReader.start(cameraId, cofig, onScanSuccess)
+  }
+
+  cameraSelect.onchange = (event) => {
     cameraId = event.target.value;
+    startScanning();
   }
 
   Html5Qrcode.getCameras().then(devices => {
     if (devices && devices.length) {
-      devices.map(device=>{
+      devices.map(device => {
         cameraSelect.innerHTML = cameraSelect.innerHTML + `<option value="${device.id}">${device.id}</option>`
       })
       cameraId = devices[0].id;
       qrCodeReader = new Html5Qrcode("reader", true);
-      const cofig = {
-        fps: 10,    // Optional, frame per seconds for qr code scanning
-        qrbox: { width: 200, height: 200 }  // Optional, if you want bounded box UI
-      }
+
       const onScanSuccess = (decodedText, decodedResult) => {
         console.log(decodedText, decodedResult);
         qrString.innerHTML = `<p>${decodedText}</p>`
@@ -70,11 +78,10 @@
       const onScanFailed = (errorMessage) => {
         // parse error, ignore it.
       }
-
-      qrCodeReader.start(cameraId, cofig, onScanSuccess)
+      startScanning();
     }
   }
-  ).catch(err =>{});
+  ).catch(err => { });
 
 </script>
 
